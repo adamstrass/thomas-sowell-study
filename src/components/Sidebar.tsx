@@ -113,6 +113,7 @@ export default function Sidebar() {
           </p>
           {[
             { name: "Flashcards", href: "/flashcards" },
+            { name: "Quotes Library", href: "/quotes" },
             { name: "Watch & Learn", href: "/watch" },
           ].map((item) => (
             <Link
