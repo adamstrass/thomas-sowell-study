@@ -27,9 +27,10 @@ export default function QuotesPage() {
   const [activeTheme, setActiveTheme] = useState<string>("All");
   const [search, setSearch] = useState("");
   const [randomQuote, setRandomQuote] = useState<Quote | null>(null);
+  const [shuffleSeed, setShuffleSeed] = useState(0);
 
   const filtered = useMemo(() => {
-    let result = quotes;
+    let result = [...quotes];
     if (activeTheme !== "All") {
       result = result.filter((q) => q.theme === activeTheme);
     }
@@ -41,13 +42,23 @@ export default function QuotesPage() {
           q.source.toLowerCase().includes(lower)
       );
     }
+    if (shuffleSeed > 0) {
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(((shuffleSeed * (i + 1) * 9301 + 49297) % 233280) / 233280 * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+    }
     return result;
-  }, [activeTheme, search]);
+  }, [activeTheme, search, shuffleSeed]);
 
   function handleRandom() {
     const pool = activeTheme === "All" ? quotes : quotes.filter((q) => q.theme === activeTheme);
     const pick = pool[Math.floor(Math.random() * pool.length)];
     setRandomQuote(pick);
+  }
+
+  function handleShuffle() {
+    setShuffleSeed(Date.now());
   }
 
   return (
@@ -73,6 +84,12 @@ export default function QuotesPage() {
           placeholder="Search quotes..."
           className="flex-1 px-4 py-2.5 rounded-lg bg-card-bg border border-card-border text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent/50 transition-colors"
         />
+        <button
+          onClick={handleShuffle}
+          className="px-5 py-2.5 rounded-lg border border-card-border bg-card-bg text-sm font-medium text-foreground/60 hover:text-foreground hover:border-foreground/20 transition-colors cursor-pointer shrink-0"
+        >
+          Shuffle
+        </button>
         <button
           onClick={handleRandom}
           className="px-5 py-2.5 rounded-lg bg-accent text-background text-sm font-medium hover:bg-accent-dim transition-colors cursor-pointer shrink-0"
