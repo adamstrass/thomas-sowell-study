@@ -13,16 +13,19 @@ interface NavItem {
 interface Section {
   name: string;
   color: { text: string; bg: string; border: string };
-  items: NavItem[];
+  books: NavItem[];
+  topics: NavItem[];
 }
 
 const sections: Section[] = [
   {
     name: "Economics",
     color: { text: "text-amber-400", bg: "bg-amber-400/10", border: "border-amber-400/30" },
-    items: [
+    books: [
       { name: "Basic Economics", href: "/books/economics/basic-economics", year: 2000 },
       { name: "Applied Economics", href: "/books/economics/applied-economics", year: 2003 },
+    ],
+    topics: [
       { name: "Minimum Wage", href: "/columns/minimum-wage" },
       { name: "Rent Control", href: "/columns/rent-control" },
       { name: "Healthcare", href: "/columns/healthcare" },
@@ -33,13 +36,15 @@ const sections: Section[] = [
   {
     name: "Race & Culture",
     color: { text: "text-sky-400", bg: "bg-sky-400/10", border: "border-sky-400/30" },
-    items: [
+    books: [
       { name: "Discrimination and Disparities", href: "/books/race-culture/discrimination-and-disparities", year: 2018 },
       { name: "Black Rednecks & White Liberals", href: "/books/race-culture/black-rednecks-white-liberals", year: 2005 },
       { name: "Ethnic America", href: "/books/history-culture/ethnic-america", year: 1981 },
       { name: "Race and Culture", href: "/books/history-culture/race-and-culture", year: 1994 },
       { name: "Migrations and Cultures", href: "/books/history-culture/migrations-and-cultures", year: 1996 },
       { name: "Conquests and Cultures", href: "/books/history-culture/conquests-and-cultures", year: 1998 },
+    ],
+    topics: [
       { name: "Affirmative Action", href: "/columns/affirmative-action" },
       { name: "Immigration", href: "/columns/immigration" },
       { name: "Cultural Factors", href: "/topics/race-culture/cultural-factors" },
@@ -48,10 +53,12 @@ const sections: Section[] = [
   {
     name: "Political Philosophy",
     color: { text: "text-rose-400", bg: "bg-rose-400/10", border: "border-rose-400/30" },
-    items: [
+    books: [
       { name: "A Conflict of Visions", href: "/books/political-philosophy/conflict-of-visions", year: 1987 },
       { name: "The Vision of the Anointed", href: "/books/political-philosophy/vision-of-the-anointed", year: 1995 },
       { name: "The Quest for Cosmic Justice", href: "/books/social-policy/quest-for-cosmic-justice", year: 1999 },
+    ],
+    topics: [
       { name: "The Role of Intellectuals", href: "/columns/role-of-intellectuals" },
       { name: "Free Speech", href: "/columns/free-speech" },
       { name: "Media Bias", href: "/columns/media-bias" },
@@ -60,10 +67,12 @@ const sections: Section[] = [
   {
     name: "Social Policy",
     color: { text: "text-violet-400", bg: "bg-violet-400/10", border: "border-violet-400/30" },
-    items: [
+    books: [
       { name: "Social Justice Fallacies", href: "/books/social-policy/social-justice-fallacies", year: 2023 },
       { name: "Affirmative Action Around the World", href: "/books/social-policy/affirmative-action-around-world", year: 2004 },
       { name: "Preferential Policies", href: "/books/social-policy/preferential-policies", year: 1990 },
+    ],
+    topics: [
       { name: "Welfare State", href: "/columns/welfare-state" },
       { name: "Crime and Policing", href: "/columns/crime-and-policing" },
       { name: "Family Structure", href: "/columns/family-structure" },
@@ -74,18 +83,21 @@ const sections: Section[] = [
   {
     name: "Education",
     color: { text: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/30" },
-    items: [
+    books: [
       { name: "Inside American Education", href: "/books/education/inside-american-education", year: 1993 },
       { name: "Charter Schools and Their Enemies", href: "/books/education/charter-schools", year: 2020 },
       { name: "Education: Assumptions vs History", href: "/books/education/education-assumptions", year: 1986 },
     ],
+    topics: [],
   },
   {
     name: "History & Ideas",
     color: { text: "text-orange-400", bg: "bg-orange-400/10", border: "border-orange-400/30" },
-    items: [
+    books: [
       { name: "Marxism", href: "/books/history-culture/marxism", year: 1985 },
       { name: "On Classical Economics", href: "/books/history-culture/on-classical-economics", year: 2006 },
+    ],
+    topics: [
       { name: "Foreign Policy", href: "/columns/foreign-policy" },
       { name: "Judicial Activism", href: "/columns/judicial-activism" },
     ],
@@ -132,38 +144,57 @@ export default function Sidebar() {
         </div>
 
         {/* Theme sections */}
-        {sections.map((section) => (
-          <div key={section.name}>
-            <h2 className={`text-xs font-semibold uppercase tracking-wider mb-1.5 ${section.color.text}`}>
-              {section.name}
-            </h2>
-            <ul className="space-y-0.5">
-              {section.items.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`block px-3 py-1.5 rounded-md text-sm transition-colors ${
-                        isActive
-                          ? `${section.color.bg} ${section.color.text} font-medium`
-                          : "text-foreground/70 hover:text-foreground hover:bg-card-bg"
-                      }`}
-                    >
-                      {item.name}
-                      {item.year && (
-                        <span className="text-muted text-[10px] ml-1">
-                          ({item.year})
-                        </span>
-                      )}
-                    </Link>
+        {sections.map((section) => {
+          const renderItem = (item: NavItem) => {
+            const isActive = pathname === item.href;
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`block px-3 py-1.5 rounded-md text-sm transition-colors ${
+                    isActive
+                      ? `${section.color.bg} ${section.color.text} font-medium`
+                      : "text-foreground/70 hover:text-foreground hover:bg-card-bg"
+                  }`}
+                >
+                  {item.name}
+                  {item.year && (
+                    <span className="text-muted text-[10px] ml-1">
+                      ({item.year})
+                    </span>
+                  )}
+                </Link>
+              </li>
+            );
+          };
+
+          return (
+            <div key={section.name}>
+              <h2 className={`text-xs font-semibold uppercase tracking-wider mb-1.5 ${section.color.text}`}>
+                {section.name}
+              </h2>
+              <ul className="space-y-0.5">
+                {section.books.length > 0 && (
+                  <li>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted/50 px-3 pt-1 pb-0.5">
+                      Books
+                    </p>
                   </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
+                )}
+                {section.books.map(renderItem)}
+                {section.topics.length > 0 && (
+                  <li>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted/50 px-3 pt-2 pb-0.5">
+                      Topics
+                    </p>
+                  </li>
+                )}
+                {section.topics.map(renderItem)}
+              </ul>
+            </div>
+          );
+        })}
       </nav>
     </>
   );
