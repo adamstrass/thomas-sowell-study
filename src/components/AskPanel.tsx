@@ -96,7 +96,7 @@ export default function AskPanel() {
           />
 
           {/* Panel */}
-          <div className="fixed bottom-6 right-6 z-50 w-full max-w-lg bg-sidebar-bg border border-card-border rounded-xl shadow-2xl flex flex-col max-h-[80vh]">
+          <div className="fixed bottom-0 right-0 md:bottom-6 md:right-6 z-50 w-full md:max-w-lg bg-sidebar-bg border border-card-border md:rounded-xl shadow-2xl flex flex-col max-h-[85vh] md:max-h-[80vh]">
             {/* Header */}
             <div className="flex items-center gap-3 px-5 pt-5 pb-3">
               <div className="flex-1">

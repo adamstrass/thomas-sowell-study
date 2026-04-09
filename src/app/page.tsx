@@ -72,11 +72,11 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero */}
       <section className="border-b border-card-border bg-card-bg/50">
-        <div className="max-w-4xl mx-auto px-8 py-20">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-20">
           <p className="text-accent text-sm font-medium uppercase tracking-wider mb-4">
             Study Platform
           </p>
-          <h1 className="text-5xl font-bold tracking-tight mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
             Thomas Sowell
           </h1>
           <p className="text-lg text-foreground/70 max-w-3xl leading-relaxed mb-4">
@@ -97,7 +97,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-8 py-12 space-y-16">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12 space-y-10 md:space-y-16">
         {/* Categories */}
         <section>
           <h2 className="text-lg font-semibold tracking-tight mb-6">

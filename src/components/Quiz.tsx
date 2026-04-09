@@ -104,7 +104,7 @@ export default function Quiz({ questions }: QuizProps) {
       <div className="space-y-3 mb-6">
         {q.options.map((option, i) => {
           let classes =
-            "w-full text-left px-4 py-3 rounded-lg border leading-relaxed transition-colors cursor-pointer";
+            "w-full text-left px-4 py-4 md:py-3 rounded-lg border leading-relaxed transition-colors cursor-pointer";
 
           if (selected === null) {
             classes +=

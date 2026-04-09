@@ -129,7 +129,7 @@ export default function FlashcardDeck({ cards, title }: FlashcardDeckProps) {
       <div className="flex items-center justify-between mt-6">
         <button
           onClick={goPrev}
-          className="px-4 py-2 rounded-md text-sm font-medium bg-card-bg border border-card-border text-foreground/50 hover:text-foreground hover:border-foreground/20 transition-colors cursor-pointer"
+          className="px-4 py-3 md:py-2 rounded-md text-sm font-medium bg-card-bg border border-card-border text-foreground/50 hover:text-foreground hover:border-foreground/20 transition-colors cursor-pointer"
         >
           Previous
         </button>
@@ -138,15 +138,18 @@ export default function FlashcardDeck({ cards, title }: FlashcardDeckProps) {
         </span>
         <button
           onClick={goNext}
-          className="px-4 py-2 rounded-md text-sm font-medium bg-card-bg border border-card-border text-foreground/50 hover:text-foreground hover:border-foreground/20 transition-colors cursor-pointer"
+          className="px-4 py-3 md:py-2 rounded-md text-sm font-medium bg-card-bg border border-card-border text-foreground/50 hover:text-foreground hover:border-foreground/20 transition-colors cursor-pointer"
         >
           Next
         </button>
       </div>
 
-      {/* Keyboard hints */}
-      <p className="text-center text-xs text-muted mt-4">
+      {/* Hints */}
+      <p className="hidden md:block text-center text-xs text-muted mt-4">
         Use arrow keys to navigate, space to flip
+      </p>
+      <p className="md:hidden text-center text-xs text-muted mt-4">
+        Tap card to flip, use buttons to navigate
       </p>
     </div>
   );

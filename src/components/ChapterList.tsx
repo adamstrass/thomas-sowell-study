@@ -89,10 +89,10 @@ export default function ChapterList({ bookId, chapters }: ChapterListProps) {
               }`}
             >
               {/* Header row — always visible */}
-              <div className="flex items-center gap-3 px-4 py-3">
+              <div className="flex items-center gap-3 px-3 md:px-4 py-3">
                 <button
                   onClick={() => toggle(key)}
-                  className={`shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors cursor-pointer ${
+                  className={`shrink-0 w-6 h-6 md:w-5 md:h-5 rounded border-2 flex items-center justify-center transition-colors cursor-pointer ${
                     isRead
                       ? "bg-accent border-accent text-background"
                       : "border-card-border hover:border-accent/50"

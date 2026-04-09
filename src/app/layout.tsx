@@ -36,9 +36,9 @@ export default function RootLayout({
       <body className="min-h-screen">
         <ScrollProgress />
         <Sidebar />
-        <div className="ml-64">
+        <div className="md:ml-64">
           <header className="sticky top-0 z-40 border-b border-card-border bg-background/80 backdrop-blur-sm">
-            <div className="max-w-4xl mx-auto flex items-center justify-center px-8 py-3">
+            <div className="max-w-4xl mx-auto flex items-center justify-center px-4 md:px-8 py-3 pl-14 md:pl-4">
               <SearchBar />
             </div>
           </header>

@@ -87,7 +87,7 @@ const sections: { heading: string; videos: Video[] }[] = [
 
 export default function WatchPage() {
   return (
-    <div className="max-w-4xl mx-auto px-8 py-16">
+    <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-16">
       <section className="mb-12">
         <p className="text-accent text-sm font-medium uppercase tracking-wider mb-3">
           Study Tools

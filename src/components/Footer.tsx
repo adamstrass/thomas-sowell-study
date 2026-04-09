@@ -58,9 +58,9 @@ const sections = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-card-border mt-16">
-      <div className="max-w-4xl mx-auto px-8 py-10">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+    <footer className="border-t border-card-border mt-10 md:mt-16">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-10">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8">
           {sections.map((section) => (
             <div key={section.name}>
               <h3 className="text-xs font-semibold uppercase tracking-wider text-muted mb-3">
