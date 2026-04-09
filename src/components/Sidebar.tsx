@@ -190,20 +190,23 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-sidebar-bg border-r border-card-border overflow-y-auto transition-transform md:translate-x-0 ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-sidebar-bg border-r border-card-border flex flex-col transition-transform md:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        <div className="p-6 pb-16">
+        {/* Mobile close — fixed at top, outside scroll area */}
+        <div className="md:hidden flex justify-end px-4 pt-4 shrink-0">
           <button
             onClick={() => setMobileOpen(false)}
-            className="md:hidden absolute top-4 right-4 p-1 text-muted hover:text-foreground cursor-pointer"
+            className="p-2 text-muted hover:text-foreground cursor-pointer"
             aria-label="Close navigation"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M4 4l8 8M12 4l-8 8" />
             </svg>
           </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 pt-2 md:pt-6 pb-16">
           {navContent}
         </div>
       </aside>
