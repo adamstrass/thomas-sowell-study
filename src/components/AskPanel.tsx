@@ -55,7 +55,20 @@ export default function AskPanel() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open) {
+      // Small delay so mobile keyboard doesn't cause layout shift
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [open]);
+
+  // Lock body scroll when open on mobile
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
   }, [open]);
 
   // Close on Escape
@@ -77,7 +90,7 @@ export default function AskPanel() {
       {/* FAB */}
       <button
         onClick={() => setOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-accent text-background flex items-center justify-center shadow-lg hover:bg-accent-dim transition-colors cursor-pointer ${open ? "hidden" : ""}`}
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 md:w-12 md:h-12 rounded-full bg-accent text-background flex items-center justify-center shadow-lg hover:bg-accent-dim transition-colors cursor-pointer ${open ? "hidden" : ""}`}
         aria-label="Ask about Sowell"
       >
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -89,49 +102,49 @@ export default function AskPanel() {
       {/* Panel */}
       {open && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop — hidden on mobile since panel is fullscreen */}
           <div
-            className="fixed inset-0 z-50 bg-black/50"
+            className="hidden md:block fixed inset-0 z-50 bg-black/50"
             onClick={() => setOpen(false)}
           />
 
-          {/* Panel */}
-          <div className="fixed bottom-0 right-0 md:bottom-6 md:right-6 z-50 w-full md:max-w-lg bg-sidebar-bg border border-card-border md:rounded-xl shadow-2xl flex flex-col max-h-[85vh] md:max-h-[80vh]">
+          {/* Panel — fullscreen on mobile, floating card on desktop */}
+          <div className="fixed inset-0 md:inset-auto md:bottom-6 md:right-6 z-50 w-full md:max-w-lg bg-sidebar-bg md:border md:border-card-border md:rounded-xl md:shadow-2xl flex flex-col md:max-h-[80vh]">
             {/* Header */}
-            <div className="flex items-center gap-3 px-5 pt-5 pb-3">
+            <div className="flex items-center gap-3 px-4 md:px-5 pt-4 md:pt-5 pb-3 border-b border-card-border md:border-b-0 shrink-0">
               <div className="flex-1">
-                <h2 className="text-sm font-semibold">Ask About Sowell</h2>
+                <h2 className="font-semibold">Ask About Sowell</h2>
                 <p className="text-xs text-muted">
                   Search across all books, concepts, and chapters
                 </p>
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="p-1 text-muted hover:text-foreground transition-colors cursor-pointer"
+                className="p-2 text-muted hover:text-foreground transition-colors cursor-pointer"
                 aria-label="Close"
               >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M4 4l8 8M12 4l-8 8" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M5 5l10 10M15 5l-10 10" />
                 </svg>
               </button>
             </div>
 
             {/* Input */}
-            <div className="px-5 pb-3">
+            <div className="px-4 md:px-5 pb-3 shrink-0">
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="e.g. Why do price controls cause shortages?"
-                className="w-full px-4 py-2.5 rounded-lg bg-card-bg border border-card-border text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent/50 transition-colors"
+                className="w-full px-4 py-3 md:py-2.5 rounded-lg bg-card-bg border border-card-border text-foreground placeholder:text-muted focus:outline-none focus:border-accent/50 transition-colors"
               />
             </div>
 
             {/* Results */}
-            <div className="flex-1 overflow-y-auto px-5 pb-5">
+            <div className="flex-1 overflow-y-auto px-4 md:px-5 pb-6 md:pb-5">
               {query.length >= 2 && results.length === 0 && (
-                <p className="text-sm text-muted py-4 text-center">
+                <p className="text-muted py-8 text-center">
                   No results found. Try different keywords.
                 </p>
               )}
@@ -152,7 +165,7 @@ export default function AskPanel() {
                         key={item.id}
                         href={item.href}
                         onClick={() => setOpen(false)}
-                        className="block border border-card-border rounded-lg p-4 bg-card-bg/50 hover:border-accent/30 transition-colors"
+                        className="block border border-card-border rounded-lg p-4 bg-card-bg/50 hover:border-accent/30 active:bg-card-bg transition-colors"
                       >
                         <div className="flex items-center gap-2 mb-1.5">
                           <span
@@ -190,10 +203,10 @@ export default function AskPanel() {
               )}
 
               {query.length < 2 && (
-                <div className="text-center py-6">
-                  <p className="text-xs text-muted">
-                    Type a question to search across 6 books, 60+ concepts, and
-                    all chapter summaries.
+                <div className="text-center py-10 md:py-6">
+                  <p className="text-sm text-muted">
+                    Type a question to search across all books, concepts, and
+                    chapter summaries.
                   </p>
                 </div>
               )}

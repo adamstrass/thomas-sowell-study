@@ -84,17 +84,17 @@ export default function SearchBar() {
         onFocus={() => results.length > 0 && setOpen(true)}
         onKeyDown={handleKeyDown}
         placeholder="Search concepts, books, ideas..."
-        className="w-full px-4 py-2 rounded-lg bg-card-bg border border-card-border text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent/50 transition-colors"
+        className="w-full px-4 py-2.5 rounded-lg bg-card-bg border border-card-border text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent/50 transition-colors"
       />
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-sidebar-bg border border-card-border rounded-lg shadow-xl overflow-hidden z-50">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-sidebar-bg border border-card-border rounded-lg shadow-xl overflow-hidden z-50 max-h-[70vh] overflow-y-auto">
           {results.map((r, i) => (
             <button
               key={`${r.href}-${r.title}`}
               onClick={() => navigate(r.href)}
               onMouseEnter={() => setSelected(i)}
-              className={`w-full text-left px-4 py-3 flex items-start gap-3 text-sm transition-colors cursor-pointer ${
+              className={`w-full text-left px-4 py-4 md:py-3 flex items-start gap-3 text-sm transition-colors cursor-pointer border-b border-card-border last:border-b-0 ${
                 i === selected ? "bg-card-bg" : "hover:bg-card-bg/50"
               }`}
             >
@@ -111,7 +111,7 @@ export default function SearchBar() {
               </span>
               <div className="min-w-0">
                 <p className="font-medium truncate">{r.title}</p>
-                <p className="text-xs text-muted truncate">{r.text}</p>
+                <p className="text-xs text-muted line-clamp-2">{r.text}</p>
               </div>
             </button>
           ))}
