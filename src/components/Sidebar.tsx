@@ -127,13 +127,14 @@ export default function Sidebar() {
             { name: "Flashcards", href: "/flashcards" },
             { name: "Quotes Library", href: "/quotes" },
             { name: "Watch & Learn", href: "/watch" },
+            { name: "Compare & Contrast", href: "/compare" },
           ].map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setMobileOpen(false)}
               className={`block px-3 py-1.5 rounded-md text-sm transition-colors ${
-                pathname === item.href
+                pathname === item.href || (item.href === "/compare" && pathname.startsWith("/compare"))
                   ? "bg-accent/10 text-accent font-medium"
                   : "text-foreground/70 hover:text-foreground hover:bg-card-bg"
               }`}
